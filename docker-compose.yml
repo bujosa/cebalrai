@@ -26,5 +26,18 @@ services:
       PGADMIN_DEFAULT_PASSWORD: root
     restart: unless-stopped
 
+  cebalrai: # Your Go application service
+    container_name: container-cebalrai
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '8080:8080' # Replace with your Go application's port
+    env_file:
+      - .env
+    restart: unless-stopped
+    depends_on:
+      - postgres
+
 volumes:
   postgres-data:
