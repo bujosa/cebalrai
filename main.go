@@ -1,28 +1,19 @@
 package main
 
 import (
-	"context"
-	"fmt"
-	"log"
-	"os"
-
-	"github.com/jackc/pgx/v5"
-	"github.com/joho/godotenv"
+	"celbalrai/database"
+	"celbalrai/user"
+	"net/http"
 )
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal(err)
-	}
+	database.ConnectDB()
+	defer database.CloseDB()
+	user.ModuleInit()
 
-	conn, err := pgx.Connect(context.Background(), os.Getenv("DATABASE_URL"))
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
-		os.Exit(1)
-	}
-	defer conn.Close(context.Background())
+	userController := user.UserControllerInstance
 
-	// Perform your database operations here
-	fmt.Println("Successfully connected to the PostgreSQL database!")
+	http.HandleFunc("/users",  userController.GetUserByID)
+
+	http.ListenAndServe(":8080", nil)
 }
