@@ -30,7 +30,7 @@ $ go run main.go
 You can use the following endpoints:
 
 - GET /users
-- GET /users?id={your_id}
+- GET /users/{your_id}
 
 ## Environment variables
 
