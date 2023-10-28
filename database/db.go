@@ -26,9 +26,12 @@ func ConnectDB() {
 	}
 
 	DB = conn
+
+	fmt.Println("Successfully connected to the PostgreSQL database!")
 }
 
 // CloseDB closes the database connection
 func CloseDB() {
 	DB.Close(context.Background())
+	fmt.Println("Successfully disconnected from the PostgreSQL database!")
 }
