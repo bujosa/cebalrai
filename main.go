@@ -4,6 +4,8 @@ import (
 	"celbalrai/database"
 	"celbalrai/user"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
 func main() {
@@ -13,7 +15,12 @@ func main() {
 
 	userController := user.UserControllerInstance
 
-	http.HandleFunc("/users",  userController.GetUserByID)
+	router := mux.NewRouter()
 
-	http.ListenAndServe(":8080", nil)
+	router.HandleFunc("/users/{id}", userController.GetUserByID).Methods("GET")
+	router.HandleFunc("/users", userController.GetUsers).Methods("GET")
+
+	http.Handle("/", router)
+
+	http.ListenAndServe(":8080", router)
 }

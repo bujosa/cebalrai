@@ -1,8 +1,12 @@
 package user
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
+
+	"github.com/gorilla/mux"
 )
 
 type UserController struct {
@@ -10,16 +14,31 @@ type UserController struct {
 }
 
 func (uc *UserController) GetUserByID(w http.ResponseWriter, r *http.Request) {
-    userID := r.URL.Query().Get("id")
+	vars := mux.Vars(r)
+	parameter := vars["id"]
 
-    var id int
-    _, _ = fmt.Sscanf(userID, "%d", &id)
+	id, err := strconv.Atoi(parameter)
 
-    user, err := uc.userService.GetUserByID(r.Context(), id)
-    if err != nil {
-        http.Error(w, fmt.Sprintf("Error: %v", err), http.StatusInternalServerError)
-        return
-    }
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Error: %v", err), http.StatusInternalServerError)
+		return
+	}
 
-    fmt.Fprintf(w, "User: %v", user)
+	user, err := uc.userService.GetUserByID(r.Context(), id)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Error: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	json.NewEncoder(w).Encode(user)
+}
+
+func (uc *UserController) GetUsers(w http.ResponseWriter, r *http.Request) {
+	users, err := uc.userService.GetUsers(r.Context())
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Error: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	json.NewEncoder(w).Encode(users)
 }

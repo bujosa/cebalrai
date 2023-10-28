@@ -39,3 +39,4 @@ See the [.env.example](.env.example) file for more information.
 ## Dependencies
 
 - [pgx](https://pkg.go.dev/github.com/jackc/pgx/v5)
+- [mux](https://pkg.go.dev/github.com/gorilla/mux)
