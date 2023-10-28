@@ -5,15 +5,15 @@ import (
 )
 
 type UserService struct {
-    userRepository *UserRepository
+	userRepository *UserRepository
 }
 
 func (us *UserService) GetUserByID(ctx context.Context, userID int) (*User, error) {
-    // In this case, we can add some logic before calling the repository
-    return us.userRepository.GetUserByID(ctx, userID)
+	// In this case, we can add some logic before calling the repository
+	return us.userRepository.GetUserByID(ctx, userID)
 }
 
 func (us *UserService) GetUsers(ctx context.Context) ([]*User, error) {
-    // In this case, we can add some logic before calling the repository
-    return us.userRepository.GetUsers(ctx)
+	// In this case, we can add some logic before calling the repository
+	return us.userRepository.GetUsers(ctx)
 }

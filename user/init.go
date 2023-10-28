@@ -3,21 +3,18 @@ package user
 import "celbalrai/database"
 
 var UserControllerInstance *UserController
-var UserServiceInstance *UserService
 
+// ModuleInit initializes the user module
 func ModuleInit() {
-    userRepo := UserRepository{
-        db: database.DB,
-    }
+	userRepo := UserRepository{
+		db: database.DB,
+	}
 
-    UserServiceInstance = &UserService{
-        userRepository: &userRepo,
-    }
+	userService := &UserService{
+		userRepository: &userRepo,
+	}
 
 	UserControllerInstance = &UserController{
-		userService: UserServiceInstance,
+		userService: userService,
 	}
 }
-
-
-
