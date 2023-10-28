@@ -1,0 +1,18 @@
+# Ignore editor and system files
+.vscode
+.idea
+*.swp
+
+# Ignore binary files and executables
+*.exe
+*.out
+
+# Ignore cache and log files
+*.log
+*.cache
+
+# Ignore dependency and vendor directories
+vendor/
+
+# Environment variables
+.env
